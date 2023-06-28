@@ -1,6 +1,7 @@
 const http = require('http');
 const fs = require('fs');
 const requests = require('requests');
+const apiKey = require('./apikey');
 
 const homeFile = fs.readFileSync("home.html", "utf-8");
 
@@ -14,7 +15,7 @@ const replaceVal = (tempVal, orgVal) => {
 
 const server = http.createServer((req, res) => {
     if (req.url == "/") {
-        requests('https://api.openweathermap.org/data/2.5/weather?q=kanpur&units=metric&appid=9e1901156772d514b432d2417011e902')
+        requests(apiKey)
             .on('data',  (chunk) => {
                 const objData = JSON.parse(chunk);
                 const arrData = [objData];
