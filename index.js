@@ -1,7 +1,10 @@
 const http = require('http');
 const fs = require('fs');
 const requests = require('requests');
-const apiKey = require('./apikey');
+const apiKey = process.env.API_KEY;
+// or 
+// const apiKey = require('./apikey');
+
 
 const homeFile = fs.readFileSync("home.html", "utf-8");
 
@@ -21,6 +24,7 @@ const server = http.createServer((req, res) => {
                 const arrData = [objData];
                 const realTimeData = arrData.map((val) => replaceVal(homeFile, val)).join("");
                 res.write(realTimeData);
+                
             })
             .on('end',  (err) => {
                 if (err) return console.log('connection closed due to errors', err);
@@ -34,5 +38,7 @@ const server = http.createServer((req, res) => {
 
     }
 });
+
+
 
 server.listen(8000, "127.0.0.1");
